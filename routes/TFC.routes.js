@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authorsController = require('../controllers/author.controller');
+const TFCController = require('../controllers/TFC.controller');
 
 // METODOS/ROUTES/ENDPOINTS: 
-router.get('/', authorsController.getAuthors); 
-//router.get('/:authorId', authorsController.getAuthorsById);
-//router.post('/', authorsController.createAuthor);
-//router.put('/:authorId', authorsController.updateAuthor);
+router.get('/', TFCController.getTFCs); 
+//router.get('/:TFCId', TFCController.getTFCById);
+//router.post('/', TFCController.createTFC);
+//router.put('/:TFCId', TFCController.updateTFC);
 
 module.exports = router;

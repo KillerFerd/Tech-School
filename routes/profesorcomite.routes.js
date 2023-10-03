@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authorsController = require('../controllers/author.controller');
+const profesorComiteController = require('../controllers/profesorComite.controller');
 
 // METODOS/ROUTES/ENDPOINTS: 
-router.get('/', authorsController.getAuthors); 
-//router.get('/:authorId', authorsController.getAuthorsById);
-//router.post('/', authorsController.createAuthor);
-//router.put('/:authorId', authorsController.updateAuthor);
+router.get('/', profesorComiteController.getProfesorComite); 
+//router.get('/:profesorComiteId', profesorComiteController.getProfesorComiteById);
+//router.post('/', profesorComiteController.createProfesorComite);
+//router.put('/:profesorComiteId', profesorComiteController.updateProfesorComite);
 
 module.exports = router;
