@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             unique: true
         },
         fechaInicio: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             field: 'fecha_inicio'
         },
