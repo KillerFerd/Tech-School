@@ -3,9 +3,9 @@ const router = express.Router();
 const profesorAlumnoController = require('../controllers/profesorAlumno.controller');
 
 // METODOS/ROUTES/ENDPOINTS: 
-router.get('/', profesorAlumnoController.getProfesoresAlumnos); 
-//router.get('/:profesorAlumnoId', profesorAlumnoController.getProfesorAlumnoById);
-//router.post('/', profesorAlumnoController.createProfesorAlumno);
-//router.put('/:profesorAlumnoId', profesorAlumnoController.updateProfesorAlumno);
+router.post('/', profesorAlumnoController.createProfesorAlumno);
+router.get('/:carnetProfesor', profesorAlumnoController.getProfesoresAlumnos);
+router.put('/:profesorAlumnoId', profesorAlumnoController.updateProfesorAlumno); 
+
 
 module.exports = router;

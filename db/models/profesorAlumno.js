@@ -3,9 +3,10 @@ const {
     Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class ProfesorAlumno extends Model {
+    class ProfesorAlumno extends Model {        
         static associate(models) {
-            // define association here
+        ProfesorAlumno.belongsTo(models.Alumno, {foreignKey: {name: 'carnet_alumno', allowNull: false}});
+        ProfesorAlumno.belongsTo(models.Profesor, {foreignKey: {name: 'carnet_profesor', allowNull: false}});
         }
     }
     ProfesorAlumno.init({
@@ -13,16 +14,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-        },
-        idProfesor: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            field: 'id_profesor'
-        },
-        idAlumno: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            field: 'id_alumno'
         }
     }, {
         sequelize,

@@ -6,6 +6,7 @@ const alumnoController = require('../controllers/alumno.controller');
 router.post('/', alumnoController.createAlumno);
 router.get('/', alumnoController.getAlumnos); 
 router.get('/:alumnoCarnet', alumnoController.getAlumnoByCarnet);
-//router.put('/:alumnoId', alumnoController.updateAlumno);
+router.put('/:alumnoCarnet', alumnoController.updateAlumno);
+router.delete('/:alumnoCarnet', alumnoController.deleteAlumno);
 
 module.exports = router;

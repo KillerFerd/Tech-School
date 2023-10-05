@@ -5,30 +5,30 @@ module.exports.createAlumno = async (req, res) => {
   try {
     const existingAlumnoDPI = await Alumno.findOne({
       where: {
-        dpi: req.body.dpi
-      }
+        dpi: req.body.dpi,
+      },
     });
 
     const existingAlumnoCarnet = await Alumno.findOne({
       where: {
-        carnet: req.body.carnet
-      }
+        carnet: req.body.carnet,
+      },
     });
 
     if (existingAlumnoDPI) {
       return res.status(409).json({
-        message: "El DPI ya está registrado en la Base de Datos",
-        data: existingAlumnoDPI
+        message: "El DPI ya está registrado",
+        data: existingAlumnoDPI,
       });
     }
 
     if (existingAlumnoCarnet) {
       return res.status(409).json({
-        message: "El Carnet ya está registrado en la Base de Datos",
-        data: existingAlumnoCarnet
+        message: "El Carnet ya está registrado",
+        data: existingAlumnoCarnet,
       });
     }
-    
+
     // Si no existe conflicto, crear un nuevo alumno
     const alumno = await Alumno.create({
       carnet: req.body.carnet,
@@ -38,15 +38,15 @@ module.exports.createAlumno = async (req, res) => {
       fechaNacimiento: req.body.fechaNacimiento,
       telefono: req.body.telefono,
       direccion: req.body.direccion,
-      carrera: req.body.carrera
+      carrera: req.body.carrera,
     });
 
     return res.status(201).json({
-      data: alumno
+      data: alumno,
     });
   } catch (error) {
-    return res.status(500).json({ 
-      error: error.message 
+    return res.status(500).json({
+      error: error.message,
     });
   }
 };
@@ -60,9 +60,13 @@ module.exports.getAlumnos = async (req, res) => {
         .status(200)
         .json({ data: alumnos, message: "No hay registros" });
     }
-    return res.status(200).json({ data: alumnos });
+    return res.status(200).json({
+      data: alumnos,
+    });
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      error: error.message,
+    });
   }
 };
 
@@ -76,17 +80,89 @@ module.exports.getAlumnoByCarnet = async (req, res) => {
     });
 
     if (!alumno) {
-      return res.status(404).json({ 
-        message: "El alumno solicitado no existe" 
+      return res.status(404).json({
+        message: "El alumno solicitado no existe",
       });
     }
 
-    return res.status(200).json({ 
-      data: alumno 
+    return res.status(200).json({
+      data: alumno,
     });
   } catch (error) {
-    return res.status(500).json({ 
-      error: error.message 
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+// Actualizar
+module.exports.updateAlumno = async (req, res) => {
+  try {
+    const alumno = await Alumno.findOne({
+      where: {
+        carnet: req.params.alumnoCarnet,
+      },
+    });
+
+    if (!alumno) {
+      return res.status(404).json({
+        message: "El Alumno no existe",
+      });
+    }
+
+    // Verificar si se está actualizando el campo 'dpi'
+    if (req.body.dpi && req.body.dpi !== alumno.dpi) {
+      // Si se está actualizando 'dpi', verificar si ya existe otro registro con el nuevo valor
+      const existingAlumno = await Alumno.findOne({
+        where: {
+          dpi: req.body.dpi,
+        },
+      });
+
+      if (existingAlumno) {
+        return res.status(400).json({
+          message: "El DPI ya está en uso",
+        });
+      }
+    }
+
+    // Actualizar los datos del alumno
+    await alumno.update({ ...req.body });
+
+    return res.status(200).json({
+      data: alumno,
+      message: "Alumno Actualizado",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+// Eliminar
+module.exports.deleteAlumno = async (req, res) => {
+  try {
+    const alumno = await Alumno.findOne({
+      where: {
+        carnet: req.params.alumnoCarnet,
+      },
+    });
+
+    if (!alumno) {
+      return res.status(404).json({
+        message: "El Alumno no existe",
+      });
+    }
+
+    await alumno.destroy(); // Elimina el registro del alumno
+
+    return res.status(200).json({
+      message: "Alumno Eliminado",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
     });
   }
 };
