@@ -4,8 +4,6 @@ const TFCController = require('../controllers/TFC.controller');
 
 // METODOS/ROUTES/ENDPOINTS: 
 router.get('/', TFCController.getTFCs); 
-//router.get('/:TFCId', TFCController.getTFCById);
-//router.post('/', TFCController.createTFC);
-//router.put('/:TFCId', TFCController.updateTFC);
+router.post('/', TFCController.CrearTFC);
 
 module.exports = router;
